@@ -1,0 +1,16 @@
+a150
+db 'labas, tai pirmoji programa' 0d 0a '$'
+
+a 100
+mov dx,150
+mov ah,09
+int 21
+int 20
+
+r cx
+00A0
+
+n labas2.com
+w
+q
+
