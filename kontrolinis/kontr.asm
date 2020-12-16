@@ -1,5 +1,5 @@
 %include 'yasmmac.inc' 
-org 100h  ;testas   
+org 100h  
 
 section .text
    startas:  
