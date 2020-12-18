@@ -5,7 +5,7 @@ org 100h                        ; visos COM programos prasideda nuo 100h
                                 ; Be to, DS=CS=ES=SS !
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 section .text                   ; kodas prasideda cia 
-
+; pridejau komentara
    startas:  
    jmp Nustatymas
 
