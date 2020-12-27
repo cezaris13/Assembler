@@ -3,6 +3,8 @@ org 100h                        ; visos COM programos prasideda nuo 100h
                                 ; Be to, DS=CS=ES=SS !
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Parašykite rezidentinę programą, kuri pakeičia int 21h, 3Fh funkcijos veikimą taip, kad failas būtų skaitomas baitais, t.y., vietoje talpinimo baitų sekos nurodytame buferyje funkcija nuskaitytų vieną baitą iš failo (BX) ir gražintų jį registre DL.
+; cia yra programa testavimui 
 section .text                   ; kodas prasideda cia 
    startas:                     ; nuo cia vykdomas kodas
      macPutString 'Ivesk rasomo failo vardą', crlf, '$'
@@ -28,10 +30,6 @@ section .text                   ; kodas prasideda cia
      mov dx,pranesimas
      call procPutStr
      
-      ; int 21h
-      ; int 21h
-      ; int 21h
-      ; int 21h
      int 0x21
      int 3fh
      End:

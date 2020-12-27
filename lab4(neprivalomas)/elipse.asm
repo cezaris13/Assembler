@@ -24,7 +24,7 @@ section .text                   ; kodas prasideda cia
       mov ax, [N]
 
       .ciklas:
-      finit
+      finit;apskaiciuojama x koordinate
       fld dword [phi]
       fcos 
       fmul dword [R]
@@ -34,7 +34,7 @@ section .text                   ; kodas prasideda cia
       fistp word [x]
       fdecstp      
 
-      fld dword [phi]
+      fld dword [phi];y koordinate
       fsin
       fmul dword [R2]
       fild word [yc]   
@@ -45,12 +45,12 @@ section .text                   ; kodas prasideda cia
       mov si, [x]
       mov di, [y]
       mov cl, 4 
-      cmp si,320
+      cmp si,320;jei neisitenka i ekrano rezius nepiesiam pixelio ir linijos
       jae .end
       cmp di,200
       jae .end
     
-      .linija:
+      .linija:;spalviname elipse
       mov si, [x]
       mov di, [y]
       mov cl, 4 
@@ -71,7 +71,7 @@ section .text                   ; kodas prasideda cia
       cmp di,100
       jg .linija2
         .end:
-      fld dword [phi]
+      fld dword [phi];padidiname delta phi
       fadd dword [dphi]
       fstp  dword [phi]
      
@@ -90,16 +90,12 @@ section .data                   ; duomenys
      dd 30.00
      phi: 
      dd  0.0
-     
      dphi:
      dd  0.0
-
      xc: 
      dw 160
      yc:
      dw 100
-          
-
      x: 
      dw  0
      y:
@@ -107,9 +103,5 @@ section .data                   ; duomenys
      
      N:
      dw 20000  
-     
-  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 section .bss                    ; neinicializuoti duomenys  
-
-

@@ -1,6 +1,7 @@
 %include 'yasmmac.inc'  
 org 100h                        ; visos COM programos prasideda nuo 100h
                                 ; Be to, DS=CS=ES=SS !
+;Programa išveda tik tas eilutes, kuriose antras laukas neturi  raidžių ‘A’ ir ‘B’, o trečio, ketvirto ir penkto laukų sumos skaitmenų suma  yra 7.
   %macro skaitymas 3
      %%pradzia:
           call procFGetChar
@@ -134,7 +135,7 @@ section .text
           mov ax,[skaiciu_suma]
           mov dx,rezultatas
           call procInt16ToStr;iki cia kiekvienas stringas konvertuojamas i skaiciu ir pridedamas prie skaiciu_suma kintamojo ir jis konvertuojamas i stringa(patogiau dirbti)
-          xor bx,bx  ; cia ale skaitmenu sumavimas bet kazko neveikia
+          xor bx,bx  
           WhileDigits:
                mov ax,[rezultatas+bx]
                cmp al,'-'

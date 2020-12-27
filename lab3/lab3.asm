@@ -5,7 +5,7 @@ org 100h                        ; visos COM programos prasideda nuo 100h
                                 ; Be to, DS=CS=ES=SS !
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 section .text                   ; kodas prasideda cia 
-; pridejau komentara
+
    startas:  
    jmp Nustatymas
 
@@ -16,15 +16,15 @@ section .text                   ; kodas prasideda cia
       .baitas:
          db 00
       .toliau:
-         mov cx,2h 
-         mov dx,.baitas
+         mov cx,1h 
+         mov dx,.baitas;pakoreguojame cx kad skaitytu kiek praso siuo atveju 1 simboli
          pushf
          call far [cs:SenasPertraukimas]
          xor dx,dx
-         mov dx,[.baitas]
+         mov dl,[.baitas]
          ret
    NaujasPertraukimas:
-      push ax
+      push ax ;nepasitikim makrosais, tai pushinom viska isskyrus dx, nes jame saugojama info
       push bx
       push cx
       push ds
@@ -65,7 +65,6 @@ section .text                   ; kodas prasideda cia
         mov     al, PERTRAUKIMAS              ; gauname sena pertraukimo vektoriu
         int     21h
 
-        
         ; Saugome sena vektoriu 
         mov     [cs:SenasPertraukimas], bx             ; issaugome seno doroklio poslinki    
         mov     [cs:SenasPertraukimas + 2], es         ; issaugome seno doroklio segmenta

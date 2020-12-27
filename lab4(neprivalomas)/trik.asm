@@ -1,6 +1,7 @@
 %include 'yasmmac.inc'  
 org 100h                        ; visos COM programos prasideda nuo 100h
                                 ; Be to, DS=CS=ES=SS !
+;palei duotas koordinates nupaisoma tiese ekrane (apskaiciuojamas krypties koeficientas etc.)
   %macro viena_krastine 4;y1 y2 x1 x2
      push cx
      push di
@@ -51,10 +52,6 @@ org 100h                        ; visos COM programos prasideda nuo 100h
         mov si, [x]
         mov di, [y]
         mov cl, 5 
-        ; cmp si,320
-        ; jae %%end
-        ; cmp di,200
-        ; jae %%end
         add di,[b]
         call procPutPixel
         sub di,[b]
@@ -79,7 +76,7 @@ startas:                     ; nuo cia vykdomas kodas
     macNewLine
     mov cx,[N]
     xor di,di
-    taskai:
+    taskai:; suvedamos n-kampio virsuniu koordinates(su neigiamais ir uz ekrano ribu esanciais skaiciais nelabai veikia)
         macPutString "ivesk tasko x koordinate", 0x0D, 0x0A, '$'
         call procGetUInt16
         mov [xtotal+di],ax
@@ -94,12 +91,12 @@ startas:                     ; nuo cia vykdomas kodas
     jne taskai
     call procSetGraphicsMode
     mov cx,[N]
-    dec cx
+    dec cx;sukame vienu maziau kartu nes paskutinis dar turi su pirma virsune krastine sudaryti
     xor di,di
     xor bx,bx
-    add bx,2
+    add bx,2;sitas reikalingas norint paimti sekancia x arba x reiksme1
     piesimas:
-        mov ax,[xtotal+di]
+        mov ax,[xtotal+di];issaugojamos dabartines ir sekancios virsunes koordinates
         mov [x1],ax
         mov ax,[xtotal+di+bx]
         mov [x2],ax
@@ -107,13 +104,13 @@ startas:                     ; nuo cia vykdomas kodas
         mov [y1],ax
         mov ax,[ytotal+di+bx]
         mov [y2],ax
-        viena_krastine y1,y2,x1,x2
-        add di,2
+        viena_krastine y1,y2,x1,x2 ; nubreziama krastine
+        add di,2;pridedam 2- pereiname prie sekancios krastines
         dec cx
-        cmp cx,00
+        cmp cx,00;ciklo sukimas n-1 kartu
     jne piesimas
 
-    mov bx,[N]
+    mov bx,[N];pirmo su paskutiniu tasku sujungimas
     add bx,bx
     sub bx,2
     mov ax,[xtotal]
@@ -129,7 +126,7 @@ startas:                     ; nuo cia vykdomas kodas
 
     mov cx,[N]
     xor bx,bx
-    taskavimas:
+    taskavimas:; sudedami ant virsuniu balti taskai
         push cx
         mov si, [xtotal+bx]
         mov di, [ytotal+bx]
@@ -143,7 +140,7 @@ startas:                     ; nuo cia vykdomas kodas
     call procWaitForEsc 
     exit
     
-    spalvinimas:
+    spalvinimas:;spalviname n-kampi
         xor di,di
         xor si,si
         pirmasc:
@@ -199,7 +196,7 @@ startas:                     ; nuo cia vykdomas kodas
 %include 'yasmlib.asm'
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 section .data                   ; duomenys
-    xtotal:
+    xtotal:;dw reiskias reiks +2 kad paimti kita x arba y reiksme
         dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;26 x
     ytotal:
         dw 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;26 y
@@ -228,6 +225,6 @@ section .data                   ; duomenys
     max:
         dw 00
     N:
-      dw 3
+        dw 3
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 section .bss  

@@ -1,5 +1,5 @@
 %include 'yasmmac.inc' 
-org 100h  ;kazkas naujo
+org 100h  
 
 section .text
    startas:  
@@ -11,7 +11,7 @@ section .text
    xor bx,bx
    mov bl,[reiksme+1];kiek simboliu 
    xor ax,ax
-   call kiek_ab 
+   call kiek_ab ;suskaiciuojama kiek pasikartojimu "ab" bus ivestoje eiluteje ir issaugojama i ax
    call procPutUInt16
    int 20h
    kiek_ab:
@@ -26,9 +26,9 @@ section .text
          mov dl,[reiksme+bx+1]
          cmp dl,'b'
          jne end
-         mov dl,[reiksme+bx+2]
-         cmp dl,'c'
-         jne end
+         ; mov dl,[reiksme+bx+2] ; programos gynimas( abc skaiciuoti vietoj ab)
+         ; cmp dl,'c'
+         ; jne end
          inc al
          end:
          inc bx

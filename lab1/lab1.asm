@@ -1,7 +1,7 @@
 %include 'yasmmac.inc'          ; Pagalbiniai makrosai
 ;------------------------------------------------------------------------
 org 100h
-
+; makrosas isvesti pranesimui i ekrana
   %macro pranesimas 1
       push ax
       push dx
@@ -45,7 +45,7 @@ section .text
         pranesimas prisistatymas
         pranesimas nauja_eilute
         ret
-    uzd1:
+    uzd1:; sukeisti 4 ir 8 simbolius vietom ir 2 padaryti %
         pranesimas pranesimas2
         ;SUKEICIAM 4 ir 8 simbolius +1 masyvo indeksas
         mov ah,[ivestis+5]
@@ -69,7 +69,7 @@ section .text
         mov [ivestis+9],ah
         mov [ivestis+3],cl
         ret
-    uzd2:
+    uzd2:; Programa spausdina kiekvieno įvesto baito antro, aštunto ir trečio bitų sumą.
         xor cx,cx
         mov [suma],cx
         pranesimas nauja_eilute
@@ -124,7 +124,7 @@ section .text
         inc bx;padidinam registro bx reiksme, t.y. imsim masyvo kita elementa
         loop ciklas; sukam cikla
         ret
-    uzd3:
+    uzd3:;. Programa apskaičiuoja ir išspausdina reiškinio |a-15| + |b % 15 - 10| + max(c%10,b%10) reikšmę. 
         mov cx,0
         mov dx,0
         mov bx,0

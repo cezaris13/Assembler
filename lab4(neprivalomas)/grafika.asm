@@ -1,11 +1,7 @@
-; 
-; 
-
 ;------------------------------------------------------------------------
 %include 'yasmmac.inc'  
 org 100h                        ; visos COM programos prasideda nuo 100h
                                 ; Be to, DS=CS=ES=SS !
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 section .text                   ; kodas prasideda cia 
 
@@ -73,35 +69,25 @@ section .text                   ; kodas prasideda cia
 
       call procWaitForEsc 
       exit
-      
-
 %include 'yasmlib.asm'
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 section .data                   ; duomenys
      R:
-     dd  50.0
-
+    	dd  50.0
      phi: 
-     dd  0.0
-     
+    	dd  0.0
      dphi:
-     dd  0.0
-
+    	dd  0.0
      xc: 
-     dw 160
+     	dw 160
      yc:
-     dw 100
-          
-
+    	dw 100
      x: 
-     dw  0
+    	dw  0
      y:
-     dw 0
-     
+    	dw 0
      N:
-     dw 360  
-     
-  
+     	dw 360  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 section .bss                    ; neinicializuoti duomenys  
 
