@@ -1,4 +1,4 @@
-%include 'yasmmac.inc'  
+%include 'yasmmac.inc'
 org 100h                        ; visos COM programos prasideda nuo 100h
                                 ; Be to, DS=CS=ES=SS !
 ;Programa išveda tik tas eilutes, kuriose antras laukas neturi  raidžių ‘A’ ir ‘B’, o trečio, ketvirto ir penkto laukų sumos skaitmenų suma  yra 7.
@@ -12,7 +12,7 @@ org 100h                        ; visos COM programos prasideda nuo 100h
           mov [%2+bx],cl; mes i reiksme kintamaji issaugojam nuskaityta reiksme
           inc bx;padidinam size reiskme ir grazinam ja
           mov [%1],bx
-          pop bx 
+          pop bx
           cmp cl,%3
           je %%pabaiga
           jmp %%pradzia
@@ -41,7 +41,7 @@ org 100h                        ; visos COM programos prasideda nuo 100h
   %endmacro
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 section .text
-   startas:; cia nuskaitomi parametrai is mano komandines eilutes  
+   startas:; cia nuskaitomi parametrai is mano komandines eilutes
      xor bx, bx
      mov bl, [0x80];kiek simboliu
      cld
@@ -67,8 +67,8 @@ section .text
      macPutString 'Pijus Petkevicius Programu sistemos 1 kursas 1 grupe',crlf,'$'
      macPutString 'Ivesk rasomo failo vardą', crlf, '$'
      mov al, 128                  ; ilgiausia eilutė
-     mov dx, rasymoFailas      ; 
-     call procGetStr 
+     mov dx, rasymoFailas      ;
+     call procGetStr
      macNewLine
 
      mov dx,rasymoFailas
@@ -89,12 +89,12 @@ section .text
           mov [size5],bx
           pop bx
           skaitymas size, reiksme, ';' ; 0ah ; pozicija(dydis nuskaityto), kur saugojama reiksme, comparator
-          skaitymas size2, reiksme2, ';' 
-          skaitymas size3, reiksme3, ';' 
-          skaitymas size4, reiksme4, ';' 
+          skaitymas size2, reiksme2, ';'
+          skaitymas size3, reiksme3, ';'
+          skaitymas size4, reiksme4, ';'
           skaitymas size5, reiksme5, 0ah
 
-          push cx  
+          push cx
           mov cx,5h
           WhileAaBb:;pirma salyga neturi buti AaBb raidziu (veikia)
                push bx
@@ -121,7 +121,7 @@ section .text
           cmp bx,01
           pop bx
           je skipWritingToFile
-          
+
           ;2 salyga 3 4 5 lauku sumos skaitmenu suma lygi 7
           push dx
           push ax
@@ -135,7 +135,7 @@ section .text
           mov ax,[skaiciu_suma]
           mov dx,rezultatas
           call procInt16ToStr;iki cia kiekvienas stringas konvertuojamas i skaiciu ir pridedamas prie skaiciu_suma kintamojo ir jis konvertuojamas i stringa(patogiau dirbti)
-          xor bx,bx  
+          xor bx,bx
           WhileDigits:
                mov ax,[rezultatas+bx]
                cmp al,'-'
@@ -165,7 +165,7 @@ section .text
           spausdinimas reiksme3,[size3]
           spausdinimas reiksme4,[size4]
           spausdinimas reiksme5,[size5]
-          
+
           skipWritingToFile:
           push bx
           mov bx,[f_pab]
@@ -192,7 +192,7 @@ section .text
           jmp End
      convert_to_digit:
    ; Išskiria iš buferio, kurio adresas DX'e sveiką skaičių int16 tipo
-   ; Rezultatas patalpinamas AX'e. BX'e - adresas, kur buvo sustota (pvz. taepas)  
+   ; Rezultatas patalpinamas AX'e. BX'e - adresas, kur buvo sustota (pvz. taepas)
           push dx
           push cx
           mov bx, dx
@@ -203,35 +203,35 @@ section .text
                jne .digits
                mov cl, 1            ; negative number
                inc bx
-          
+
           .digits:
-               cmp [bx], byte '0'          
+               cmp [bx], byte '0'
                jb  .lessThanNumeric
-               cmp [bx], byte '9'          
+               cmp [bx], byte '9'
                jbe  .updateAX
-               .lessThanNumeric: 
+               .lessThanNumeric:
                jmp .endParsing
                .updateAX:
                mov dx, 10
                mul dx
-               mov dh, 0 
+               mov dh, 0
                mov dl, [bx]
                sub dl, '0'
                add ax, dx
-               inc bx 
+               inc bx
                jmp .digits
           .endParsing:
                cmp cl, 1
                jne .return
                neg ax
-          .return:        
+          .return:
           pop cx
           pop dx
           ret
 %include 'yasmlib.asm'
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-section .data   
+section .data
    skaitymoFailas:
         times 255 db 00
    rasymoFailas:
@@ -241,23 +241,23 @@ section .data
    WriteDescriptor:
         dw 00
    reiksme:
-        db 50h, 00h, '************************************************' 
+        db 50h, 00h, '************************************************'
    size:
         dw 00
    reiksme2:
-        db 50h, 00h, '************************************************' 
+        db 50h, 00h, '************************************************'
    size2:
         dw 00
    reiksme3:
-        db 50h, 00h, '************************************************' 
+        db 50h, 00h, '************************************************'
    size3:
         dw 00
    reiksme4:
-        db 50h, 00h, '************************************************' 
+        db 50h, 00h, '************************************************'
    size4:
         dw 00
    reiksme5:
-        db 50h, 00h, '************************************************' 
+        db 50h, 00h, '************************************************'
    size5:
         dw 00
    f_pab:
@@ -269,7 +269,7 @@ section .data
    skaiciu_suma:
         dw 00
    rezultatas:
-        db 50h, 00h, '***********************************************' 
+        db 50h, 00h, '***********************************************'
    raides:
         db 'AaBb'
 section .bss

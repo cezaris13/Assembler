@@ -1,8 +1,8 @@
-%include 'yasmmac.inc'  
+%include 'yasmmac.inc'
 org 100h                        ; visos COM programos prasideda nuo 100h
                                 ; Be to, DS=CS=ES=SS !
 ;palei duotas koordinates nupaisoma tiese ekrane (apskaiciuojamas krypties koeficientas etc.)
-  %macro viena_krastine 4;y1 y2 x1 x2 
+  %macro viena_krastine 4;y1 y2 x1 x2
      push ax
      push ax
      push bx
@@ -48,7 +48,7 @@ org 100h                        ; visos COM programos prasideda nuo 100h
         fistp dword [y]
         mov si, [x]
         mov di, [y]
-        mov cl, 5 
+        mov cl, 5
         add di,[b]
         call procPutPixel
         sub di,[b]
@@ -60,17 +60,17 @@ org 100h                        ; visos COM programos prasideda nuo 100h
 
   %endmacro
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-section .text                   ; kodas prasideda cia 
+section .text                   ; kodas prasideda cia
 
    startas:                     ; nuo cia vykdomas kodas
     call procGetUInt16;ivedame kokio n-kampio noresime
     mov [N],ax
-    macNewLine 
-    finit 
+    macNewLine
+    finit
      fldpi
      fadd st0, st0
-     fild word [N]101
-     fdivr st0, st1 
+     fild word [N]
+     fdivr st0, st1
      fstp dword [dphi]
      xor ax,ax
      mov ax, [N]
@@ -79,27 +79,27 @@ section .text                   ; kodas prasideda cia
       .ciklas:; cia nupiesiamas n-kampis, nenuspalvintas
       finit ; veikimo principas: gaunama esamo tasko x ir y koordinates ir sekancio kuris bus apskritime delta phi=360/n pasislinkes toliau  kartojant n+1 kartu gaunamas nenuspalvintas n-kampis
       fld dword [phi]
-      fcos 
+      fcos
       fmul dword [R]
       fild word [xc]
       fadd st0, st1
       frndint
       fistp word [x1]
-      fdecstp   
-      finit   
+      fdecstp
+      finit
       fld dword [phi]
       fadd dword [dphi]
-      fcos 
+      fcos
       fmul dword [R]
       fild word [xc]
       fadd st0, st1
       frndint
       fistp word [x2]
-      fdecstp 
+      fdecstp
 
       finit
       fld dword [phi]
-      fsin 
+      fsin
       fmul dword [R]
       fild word [yc]
       fadd st0, st1
@@ -108,7 +108,7 @@ section .text                   ; kodas prasideda cia
       finit
       fld dword [phi]
       fadd dword [dphi]
-      fsin 
+      fsin
       fmul dword [R]
       fild word [yc]
       fadd st0, st1
@@ -119,13 +119,13 @@ section .text                   ; kodas prasideda cia
       fadd dword [dphi]
       fstp  dword [phi]
 
-      dec ax  
+      dec ax
       cmp ax,00
-      jge .ciklas     
+      jge .ciklas
       call spalvinimas
-    call procWaitForEsc 
+    call procWaitForEsc
     exit
-    
+
     spalvinimas:;einama vertikaliai ir ieskoma ne juodu pixeliu jei 1 arba 0 nuspalvintas nieko nedarom jei 2 - tada pakeiciam pixeliu spalvas nuo pirmo ne juodo iki paskutinio(siuo budu galima spalvinti tik iskiluosius n-kampius )
         xor di,di
         xor si,si
@@ -133,14 +133,14 @@ section .text                   ; kodas prasideda cia
             xor bx,bx
             xor di,di
             dec di
-            mov [pirmav],di;pirmos ir antros sutiktos ne juodos spalvos koord. reiskmes i ffff( tokios i ekrana netelpa tai galima nesukti del to galvos) 
+            mov [pirmav],di;pirmos ir antros sutiktos ne juodos spalvos koord. reiskmes i ffff( tokios i ekrana netelpa tai galima nesukti del to galvos)
             mov [antrav],di
             inc di
             antrasc:
             mov cx,si
             mov dx,di
             mov ah,0dh
-            int 10h ; int 10h, ah=0dh- palei kokios reiksmes yra cx ir dx grazina i al kokia spalva( 00- juoda) 
+            int 10h ; int 10h, ah=0dh- palei kokios reiksmes yra cx ir dx grazina i al kokia spalva( 00- juoda)
             cmp al,00
             je baigiam
             cmp bx,0; ar cia pirma sutikta ne juoda
@@ -172,15 +172,15 @@ section .text                   ; kodas prasideda cia
         pradzia:
             mov di,ax
             mov cl,05; 05-violetine
-            call procPutPixel 
+            call procPutPixel
             inc ax
             mov bx,[antrav]
             cmp ax,bx
         jne pradzia
-    ret  
+    ret
 %include 'yasmlib.asm'
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-section .data   
+section .data
     N:
         dw 0
     dphi:
@@ -197,10 +197,10 @@ section .data
         dd 00.00
     b:
         dw 0
-    x: 
+    x:
         dw  0
     y:
-        dw 0 
+        dw 0
     pirmav:
         dw 00
     antrav:
@@ -211,11 +211,11 @@ section .data
         dw 00
     R:
         dd  50.0
-    phi: 
+    phi:
         dd  0.0
-    xc: 
+    xc:
         dw 160
     yc:
         dw 100
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-section .bss  
+section .bss

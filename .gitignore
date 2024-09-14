@@ -1,0 +1,8 @@
+*.COM
+*.COM
+
+/tasks/**/*.COM
+/tasks/**/yasm.exe
+/tasks/**/yasmlib.asm
+/tasks/**/yasmmac.inc
+/tasks/**/cwsdpmi.exe
