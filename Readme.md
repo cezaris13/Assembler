@@ -20,7 +20,7 @@ programName.com
 Given line and 3 numbers get:
 - Swap 4th and 8th symbols, and make 2nd symbol '%'.
 - From given string line calculate sum of every single char 2nd, 3rd and 8th bits.
-- Calculate $|a-15| + |b\%15-10| + \max(c\%10,b\%10)$ value.
+- Calculate |a-15| + |b % 15 - 10| + max(c % 10,b % 10) value.
 ### Laboratory work 2
 - Enter file name and output file name:
 
