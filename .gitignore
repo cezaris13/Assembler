@@ -6,3 +6,5 @@
 /tasks/**/yasmlib.asm
 /tasks/**/yasmmac.inc
 /tasks/**/cwsdpmi.exe
+
+dosbox.conf
